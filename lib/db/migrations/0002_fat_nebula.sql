@@ -1,0 +1,1 @@
+ALTER TABLE "content" ADD COLUMN "title" varchar(255) NOT NULL;
