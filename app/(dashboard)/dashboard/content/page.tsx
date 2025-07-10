@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { LayoutDashboard } from 'lucide-react';
 import { getContentItems } from '@/lib/db/queries';
-import { Button } from '@/components/ui/button';
+import { CreateContentForm } from '@/components/content/CreateContentForm';
+import Link from 'next/link';
 
 function getRelativeTime(date: Date) {
   const now = new Date();
@@ -27,10 +28,7 @@ export default async function ContentItemsPage() {
       </h1>
       <Card>
         <CardHeader className="block">
-          <Button
-            type="submit"
-            className="bg-orange-500 hover:bg-orange-600 text-white"
-          >Add new</Button>
+          <CreateContentForm />
         </CardHeader>
         <CardContent>
           {contentItems.length > 0 ? (
@@ -38,17 +36,19 @@ export default async function ContentItemsPage() {
               {contentItems.map((contentItem) => {
                 return (
                   <li key={contentItem.id} className="flex items-center space-x-4">
-                    <div className="bg-orange-100 rounded-full p-2">
-                      <LayoutDashboard className="w-5 h-5 text-orange-600" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900">
-                        {contentItem.title}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        {getRelativeTime(new Date(contentItem.updatedAt))}
-                      </p>
-                    </div>
+                    <Link href={`/editor/${contentItem.id}`} className="flex items-center space-x-4 w-full">
+                      <div className="bg-orange-100 rounded-full p-2">
+                        <LayoutDashboard className="w-5 h-5 text-orange-600" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-gray-900">
+                          {contentItem.title}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {getRelativeTime(new Date(contentItem.updatedAt))}
+                        </p>
+                      </div>
+                    </Link>
                   </li>
                 );
               })}
